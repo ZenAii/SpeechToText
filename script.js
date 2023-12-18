@@ -1,81 +1,83 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const recognition = new webkitSpeechRecognition() || new SpeechRecognitionAlternative();
-    const langguageSelect = document.getElementById('language');
-    const resultContainer = document.querySelector('.result p.resultText');
-    const startListeningButton = document.querySelector('.btn.record');
-    const recordButtonText = document.querySelector('.btn.record p');
-    const clearButton = document.querySelector('.btn.clear');
-    const downloadButton = document.querySelector('.btn.download');
+document.addEventListener("DOMContentLoaded", () => {
+  const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+  const languageSelect = document.getElementById("language");
+  const resultContainer = document.querySelector(".result p.resultText");
+  const startListeningButton = document.querySelector(".btn.record");
+  const recordButtonText = document.querySelector(".btn.record p");
+  const clearButton = document.querySelector(".btn.clear");
+  const downloadButton = document.querySelector(".btn.download");
 
-    let recognizing = false;
+  let recognizing = false;
 
-    languages.forEach(language => {
-        const option = document.createElement('option');
-        option.value = language.code;
-        option.text = language.name;
-        langguageSelect.addEventListener(option);
-    });
+  languages.forEach((language) => {
+    const option = document.createElement("option");
+    option.value = language.code;
+    option.text = language.name;
+    languageSelect.appendChild(option);
+  });
 
-    recognition.continous = true;
-    recognition.interimResults = true;
-    recognition.lang = langguageSelect.value;
+  recognition.continuous = true; // Fix typo in 'continuous'
+  recognition.interimResults = true;
+  recognition.lang = languageSelect.value;
 
-    langguageSelect.addEventListener('change', () => {
-        recognition.lang ) langguageSelect.value;
-    });
+  languageSelect.addEventListener("change", () => {
+    recognition.lang = languageSelect.value; // Fix assignment typo
+  });
 
-    startListeningButton.addEventListener('click', toggleSpeechRecognition);
+  startListeningButton.addEventListener("click", toggleSpeechRecognition);
 
-    clearButton.addEventListener('click', clearResults);
+  clearButton.addEventListener("click", clearResults);
 
+  downloadButton.disabled = true;
+
+  recognition.onresult = (event) => {
+    const result = event.results[event.results.length - 1][0].transcript;
+    resultContainer.textContent = result;
+    downloadButton.disabled = false; // Fix disable condition
+  };
+
+  recognition.onend = () => {
+    recognizing = false; // Fix typo in 'recognizing'
+    startListeningButton.classList.remove("recording");
+    recordButtonText.textContent = "Start Listening";
+  };
+
+  downloadButton.addEventListener("click", downloadResult);
+
+  function toggleSpeechRecognition() {
+    if (recognizing) {
+      recognition.stop();
+    } else {
+      recognition.start();
+    }
+
+    recognizing = !recognizing;
+    startListeningButton.classList.toggle("recording", recognizing);
+    recordButtonText.textContent = recognizing
+      ? "Stop Listening"
+      : "Start Listening"; // Fix conditional text
+  }
+
+  function clearResults() {
+    resultContainer.textContent = "";
     downloadButton.disabled = true;
+  }
 
-    recognition.onresult = (event) => {
-        const result = event.results[event.results.length -1][0].transcript;
-        resultContainer.textContent = result;
-        downloadButton.disabled = true;
-    };
+  function downloadResult() {
+    const resultText = resultContainer.textContent;
 
-    recognition.onend = () => {
-        recognizing = false:
-        startListeningButton.classList.remove('recording');
-        recordButtonText.textContent = 'Start Listening');
-    };
+    const blob = new Blob([resultText], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
 
-    downloadButton.addEventListener('click', downloadResult);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Translated_text.txt"; // Fix file name
+    a.style.display = "none";
 
-    function toggleSpeechRecognition(){
-        if (recognizing){
-            recognition.stop();
-        } else {
-            recognition.start();
-        }
+    document.body.appendChild(a);
+    a.click();
 
-        recognizing = !recognizing;
-        startListeningButton.classList.toggle('recording', recognizing);
-        recordButtonText.textContent = 'Stop Listening';
-    }
-
-    function clearResults() {
-        resultContainer.textContent = '';
-        downloadButton.disabled = true;
-    }
-
-    function downloadResult() {
-        const resultText = resultContainer.textContent;
-
-        const blob = new Blob([resultText], {type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Translated text.txt';
-        a.style.display = 'none';
-
-        document.body.appendChild(a);
-        a.click();
-
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 });
