@@ -1,22 +1,23 @@
+/* Import the 'Poppins' font family from Google Fonts with various weights */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* Apply global styles to all elements */
 * {
     margin: 0;
     padding: 0;
     outline: none;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-
+    font-family: 'Poppins', sans-serif; /* Set the default font family */
 }
 
-
+/* Apply styles to the body element */
 body {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #ffd8d8;
-    background-image:
+    background-image: /* Apply radial gradients for a background pattern */
         radial-gradient(at 86% 45%, hsla(22, 70%, 77%, 1) 0px, transparent 50%),
         radial-gradient(at 21% 96%, hsla(294, 82%, 79%, 1) 0px, transparent 50%),
         radial-gradient(at 16% 5%, hsla(193, 63%, 69%, 1) 0px, transparent 50%),
@@ -26,6 +27,7 @@ body {
         radial-gradient(at 49% 76%, hsla(59, 86%, 79%, 1) 0px, transparent 50%);
 }
 
+/* Apply styles to the main container */
 .container {
     width: 400px;
     background-color: #f4f4f4;
@@ -34,6 +36,7 @@ body {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
+/* Apply styles to the header within the container */
 .container .header {
     font-size: 22px;
     text-align: center;
@@ -42,6 +45,7 @@ body {
     color: #333;
 }
 
+/* Apply styles to settings within the container */
 .container .settings p {
     font-size: 14px;
     font-weight: 500;
@@ -49,6 +53,7 @@ body {
     margin-bottom: 12px;
 }
 
+/* Apply styles to the select dropdown within the container */
 .container .settings select {
     width: 100%;
     padding: 6px 10px;
@@ -56,6 +61,7 @@ body {
     border-radius: 5px;
 }
 
+/* Apply styles to the separator line within the container */
 .container .separator {
     width: 100%;
     height: 1px;
@@ -64,6 +70,7 @@ body {
     margin: 20px 0;
 }
 
+/* Apply styles to generic buttons */
 .btn {
     display: flex;
     align-items: center;
@@ -77,42 +84,50 @@ body {
     font-size: 14px;
     cursor: pointer;
     color: #fff;
-    background: #4caf50;
+    background: #4caf50; /* Default green background color for buttons */
 }
 
+/* Apply styles to icons within buttons */
 .btn i {
     font-size: 24px;
 }
 
+/* Apply styles to disabled buttons */
 .btn:disabled {
     background: #999;
     cursor: not-allowed;
 }
 
+/* Apply styles to the recording spinner icon within the container */
 .container .record .bx-spin {
     display: none;
 }
 
+/* Apply styles to the recording spinner icon when recording is active */
 .container .record.recording .bx-spin {
     display: block;
 }
 
+/* Apply styles to hide the regular icon when recording is active */
 .container .record.recording i {
     display: none;
 }
 
+/* Apply styles to the result text within the container */
 .container .result p {
     display: inline;
     margin-left: 3px;
     color: #666;
 }
 
+/* Apply styles to a group of buttons with a blue background */
 .buttons {
     display: flex;
     gap: 20px;
 }
 
+/* Apply styles to individual buttons within the group */
 .buttons .btn {
     margin-bottom: 10px;
-    background: #2196f3; 
+    background: #2196f3; /* Blue background color for these buttons */
 }
