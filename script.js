@@ -13,15 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const option = document.createElement("option");
     option.value = language.code;
     option.text = language.name;
-    languageSelect.appendChild(option);
+    languageSelect.add(option);
   });
 
-  recognition.continuous = true; // Fix typo in 'continuous'
+  recognition.continuous = true;
   recognition.interimResults = true;
   recognition.lang = languageSelect.value;
 
   languageSelect.addEventListener("change", () => {
-    recognition.lang = languageSelect.value; // Fix assignment typo
+    recognition.lang = languageSelect.value;
   });
 
   startListeningButton.addEventListener("click", toggleSpeechRecognition);
@@ -33,11 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
   recognition.onresult = (event) => {
     const result = event.results[event.results.length - 1][0].transcript;
     resultContainer.textContent = result;
-    downloadButton.disabled = false; // Fix disable condition
+    downloadButton.disabled = false;
   };
 
   recognition.onend = () => {
-    recognizing = false; // Fix typo in 'recognizing'
+    recognizing = false;
     startListeningButton.classList.remove("recording");
     recordButtonText.textContent = "Start Listening";
   };
@@ -53,9 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     recognizing = !recognizing;
     startListeningButton.classList.toggle("recording", recognizing);
-    recordButtonText.textContent = recognizing
-      ? "Stop Listening"
-      : "Start Listening"; // Fix conditional text
+    recordButtonText.textContent = "Stop Listening";
   }
 
   function clearResults() {
@@ -71,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Translated_text.txt"; // Fix file name
+    a.download = "Your-Text.txt";
     a.style.display = "none";
 
     document.body.appendChild(a);
